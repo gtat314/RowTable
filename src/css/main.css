@@ -1,0 +1,597 @@
+/*
+	@modCssClasses
+	@customTag: table-box
+		@cssMod: mod_discreet
+		@cssMod: mod_strictRow
+	@customTag: table-row
+	--theme-discreetBoxShadow 			rgba(0, 0, 0, 0.2)
+	--theme-highlightedBackgroundColor 	rgba(0, 0, 0, 0.1)
+	--theme-inputBackgroundColor 		rgba(0, 0, 0, 0)
+	--theme-mainFont 					rgba(0, 0, 0, 1)
+	--theme-modalButton-color 			rgba(255, 255, 255, 1)
+	--theme-secondaryBackground 		rgba(255, 255, 255, 1)
+	--theme-secondaryFont 				rgba(0, 0, 0, 0.6)
+	--theme-transitionDuration 			0.15s
+*/
+
+
+
+
+table-box {
+	display: block;
+	box-shadow: 0 0 0.25rem var(--theme-mainFont, rgba(0, 0, 0, 1));
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+	transition-property: box-shadow, background-color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	background-color: var(--theme-secondaryBackground, rgba(255, 255, 255, 1));
+	overflow: hidden;
+}
+
+table-box.mod_diacritical {
+	box-shadow: 0 0 0 black;
+	overflow: unset;
+	background-color: var(--theme-inputBackgroundColor, rgba(0, 0, 0, 0)) !important;
+}
+
+table-box.mod_discreet {
+	box-shadow: 0 0 0 1px var(--theme-discreetBoxShadow, rgba(0, 0, 0, 0.2)) inset;
+}
+
+.dragPlaceHolder {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+	background-color: var(--theme-secondaryFont, rgba(0, 0, 0, 0.6));
+	transition-property: background-color, border-bottom-color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row, a.table-row {
+	display: flex;
+	cursor: pointer;
+	padding-top: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 1rem;
+	padding-left: 1rem;
+	transition-property: background-color, border-bottom-color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+	align-items: center;
+	gap: 1rem;
+	position: relative;
+	flex-flow: row wrap;
+}
+
+table-box.mod_diacritical table-row, table-box.mod_diacritical a.table-row {
+	margin-bottom: 0.5rem;
+	border-bottom: medium none;
+	border-radius: 0.5rem;
+	box-shadow: 0 0 0.1rem black;
+	padding: 0.5rem;
+	background-color: var(--theme-bodyBackgroundColor);
+}
+
+table-box.mod_strictRow table-row, table-box.mod_strictRow a.table-row {
+	flex-direction: row !important;
+}
+
+table-row.compact, a.table-row.compact {
+	padding-top: 0.5rem;
+	padding-right: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.5rem;
+	gap: 0.5rem;
+}
+
+table-row.short, a.table-row.short {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+table-row.disabled, a.table-row.disabled {
+	cursor: auto;
+}
+
+table-row:hover, table-row.active, a.table-row:hover, a.table-row.active {
+	background-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+}
+
+table-box.mod_diacritical table-row:hover, table-box.mod_diacritical table-row.active, table-box.mod_diacritical a.table-row:hover, table-box.mod_diacritical a.table-row.active {
+	background-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+}
+
+table-row.disabled:hover, a.table-row.disabled:hover {
+	background-color: var(--theme-inputBackgroundColor, rgba(0, 0, 0, 0));
+}
+
+table-box.mod_diacritical table-row.disabled:hover, table-box.mod_diacritical table-row.disabled.active, table-box.mod_diacritical a.table-row.disabled:hover, table-box.mod_diacritical a.table-row.disabled.active {
+	background-color: var(--theme-inputBackgroundColor, rgba(0, 0, 0, 0));
+}
+
+table-row:last-child, a.table-row:last-child {
+	border-bottom-width: 0px;
+}
+
+
+
+
+table-row > .width2, a.table-row > .width2 {
+	width: 2rem;
+	max-width: 2rem;
+	min-width: 2rem;
+}
+
+table-row > .width3, a.table-row > .width3 {
+	width: 3rem;
+	max-width: 3rem;
+	min-width: 3rem;
+}
+
+table-row > .width4, a.table-row > .width4 {
+	width: 4rem;
+	max-width: 4rem;
+	min-width: 4rem;
+}
+
+table-row > .width5, a.table-row > .width5 {
+	width: 5rem;
+	max-width: 5rem;
+	min-width: 5rem;
+}
+
+table-row > .width6, a.table-row > .width6 {
+	width: 6rem;
+	max-width: 6rem;
+	min-width: 6rem;
+}
+
+table-row > .width7, a.table-row > .width7 {
+	width: 7rem;
+	max-width: 7rem;
+	min-width: 7rem;
+}
+
+table-row > .width8, a.table-row > .width8 {
+	width: 8rem;
+	max-width: 8rem;
+	min-width: 8rem;
+}
+
+table-row > .width9, a.table-row > .width9 {
+	width: 9rem;
+	max-width: 9rem;
+	min-width: 9rem;
+}
+
+table-row > .width10, a.table-row > .width10 {
+	width: 10rem;
+	max-width: 10rem;
+	min-width: 10rem;
+}
+
+table-row > .width11, a.table-row > .width11 {
+	width: 11rem;
+	max-width: 11rem;
+	min-width: 11rem;
+}
+
+table-row > .alignRight, a.table-row > .alignRight {
+	text-align: right;
+}
+
+table-row > .alignCenter, a.table-row > .alignCenter {
+	text-align: center;
+}
+
+table-row > .marginRight1, a.table-row > .marginRight1 {
+	margin-right: 1rem;
+}
+
+table-row > .marginRight2, a.table-row > .marginRight2 {
+	margin-right: 2rem;
+}
+
+
+
+
+table-row .linebreaker, a.table-row .linebreaker {
+	width: 100%;
+}
+
+table-row .drag, a.table-row .drag {
+	height: 2rem;
+	width: 1.5rem;
+	margin-right: -1rem;
+	margin-left: -1.25rem;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	cursor: grab;
+}
+
+table-box.mod_diacritical table-row .drag, table-box.mod_diacritical a.table-row .drag {
+	width: 0.5rem;
+	margin-left: -1rem;
+	margin-right: -0.5rem;
+}
+
+table-row:hover .drag, a.table-row:hover .drag {
+	opacity: 1;
+}
+
+table-row .drag svg, a.table-row .drag svg {
+	fill: var(--theme-secondaryFont, rgba(0, 0, 0, 0.6));
+	height: 1.5rem;
+	margin-left: -0.25rem;
+	transition-property: fill;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-box.mod_diacritical table-row .drag svg, table-box.mod_diacritical a.table-row .drag svg {
+	height: unset;
+	margin-left: -0.75rem;
+}
+
+table-row .image, a.table-row .image {
+	display: flex;
+	width: 4rem;
+	height: 4rem;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+	transition-property: background-color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .image svg, a.table-row .image svg {
+	width: 40%;
+	opacity: 0.66;
+	fill: var(--theme-mainFont, rgba(0, 0, 0, 1));
+	transition-property: fill;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .image img, a.table-row .image img {
+	width: 4rem;
+	height: 4rem;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+	box-shadow: 0 0 0.25rem var(--theme-inputBackgroundColor, rgba(0, 0, 0, 0));
+	transition-property: transform, box-shadow;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	background-color: var(--theme-modalButton-color, rgba(255, 255, 255, 1));
+	transform-origin: right;
+	object-fit: cover;
+}
+
+table-row .big, a.table-row .big {
+	text-align: right;
+	min-width: 6rem;
+	max-width: 6rem;
+	width: 6rem;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+table-box.mod_diacritical table-row .big, table-box.mod_diacritical a.table-row .big {
+	margin-right: 0.5rem;
+}
+
+table-row .big samp, a.table-row .big samp {
+	font-weight: 600;
+	font-size: 1.1rem;
+	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
+	transition-property: color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .info, a.table-row .info {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+	border-bottom-left-radius: 0.25rem;
+	justify-content: center;
+	width: 0;
+}
+
+table-row .info.reverse, a.table-row .info.reverse {
+	flex-direction: column-reverse;
+}
+
+table-row .info p, a.table-row .info p {
+	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
+	transition-property: color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	text-underline-offset: 0.3rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+table-row .info.wrap p, a.table-row .info.wrap p {
+	overflow: unset;
+	white-space: normal;
+}
+
+table-row .info span, a.table-row .info span {
+	display: block;
+	font-size: 0.84rem;
+	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
+	opacity: 0.66;
+	transition: color 0.15s ease 0s;
+}
+
+table-row .info.bold span, a.table-row .info.bold span {
+	font-weight: 600;
+	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
+}
+
+table-row .icons, a.table-row .icons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+table-row .icons.alignRight, a.table-row .icons.alignRight {
+	justify-content: flex-end;
+}
+
+table-row .icons .icon, a.table-row .icons .icon {
+	min-width: 1.75rem;
+	max-width: 1.75rem;
+	height: 1.75rem;
+	display: flex;
+	justify-content: center;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+	border-bottom-left-radius: 0.25rem;
+	transition-property: box-shadow;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .icons .icon svg, a.table-row .icons .icon svg {
+	fill: var(--theme-mainFont, rgb(0, 0, 0));
+	transition-property: fill;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	width: 1.25rem;
+}
+
+table-row .controls, table-row .controlsPlain, a.table-row .controls, a.table-row .controlsPlain {
+	display: flex;
+	align-items: center;
+	min-height: 1rem;
+	transition-property: opacity;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row:hover .controls, table-row:hover .controlsPlain, a.table-row:hover .controls, a.table-row:hover .controlsPlain {
+	opacity: 1;
+}
+
+table-row .controls a, table-row .controls samp, table-row .controlsPlain a, table-row .controlsPlain samp, a.table-row .controls a, a.table-row .controls samp, a.table-row .controlsPlain a, a.table-row .controlsPlain samp {
+	transition-property: background-color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .controls samp.icon, table-row .controlsPlain samp.icon, a.table-row .controls samp.icon, a.table-row .controlsPlain samp.icon {
+	display: flex;
+	padding-top: 0.5rem;
+	padding-right: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.5rem;
+	max-width: max-content;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+	cursor: pointer;
+	justify-content: center;
+}
+
+table-row .controls samp.icon, a.table-row .controls samp.icon {
+	min-width: 3rem;
+	min-height: 3rem;
+}
+
+table-row .controlsPlain samp.icon, a.table-row .controlsPlain samp.icon {
+	min-width: 1.5rem;
+	min-height: 1.5rem;
+}
+
+table-row .controls samp.icon:hover, a.table-row .controls samp.icon:hover {
+	background-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+}
+
+table-row .controls samp.icon svg, table-row .controlsPlain samp.icon svg, a.table-row .controls samp.icon svg, a.table-row .controlsPlain samp.icon svg {
+	fill: var(--theme-mainFont, rgba(0, 0, 0, 1));
+	transition-property: fill;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .controls samp.icon svg, a.table-row .controls samp.icon svg {
+	width: 1.25rem;
+}
+
+table-row .controlsPlain samp.icon svg, a.table-row .controlsPlain samp.icon svg {
+	width: 1rem;
+}
+
+table-row .controls samp.icon.large svg, a.table-row .controls samp.icon.large svg {
+	width: 66%;
+}
+
+table-row .controlsPlain samp.icon.large svg, a.table-row .controlsPlain samp.icon.large svg {
+	width: 1.5rem;
+}
+
+table-row .controls samp.icon p, table-row .controlsPlain samp.icon p, a.table-row .controls samp.icon p, a.table-row .controlsPlain samp.icon p {
+	font-weight: 400;
+	text-transform: none;
+	font-size: 0.8rem;
+	color: var(--theme-secondaryFont, rgba(0, 0, 0, 0.6));
+	transition-property: color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	line-height: 1.75;
+}
+
+table-row .controls samp.icon:hover p, table-row .controlsPlain samp.icon:hover p, a.table-row .controls samp.icon:hover p, a.table-row .controlsPlain samp.icon:hover p {
+	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
+}
+
+table-row:first-child .controls samp.moveUp, table-row:first-child .controlsPlain samp.moveUp, a.table-row:first-child .controls samp.moveUp, a.table-row:first-child .controlsPlain samp.moveUp {
+	opacity: 0;
+}
+
+table-row:last-child .controls samp.moveDown, table-row:last-child .controlsPlain samp.moveDown, a.table-row:last-child .controls samp.moveDown, a.table-row:last-child .controlsPlain samp.moveDown {
+	opacity: 0;
+}
+
+
+
+
+@media only screen and (max-device-width: 900px) {
+
+    table-box.mod_diacritical table-row .drag, table-box.mod_diacritical a.table-row .drag {
+		margin-left: 0.25rem;
+		opacity: 1;
+		margin-right: -0.5rem;
+	}
+
+}
+
+
+
+
+@media only screen and (max-device-width: 550px) {
+
+	table-row .drag, a.table-row .drag {
+		position: absolute;
+		left: 0;
+		margin-left: 0;
+		margin-right: 0;
+		opacity: 1;
+		top: 0;
+		bottom: 0;
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+
+	table-box.mod_diacritical table-row .drag, table-box.mod_diacritical a.table-row .drag {
+        position: static;
+    }
+
+    table-row .badgeContainer, a.table-row .badgeContainer {
+        min-width: 4rem;
+        max-height: 4rem;
+    }
+
+    table-row .badgeContainer .badge, a.table-row .badgeContainer .badge {
+        width: 4rem;
+        height: 4rem;
+        min-width: 4rem;
+        max-width: 4rem;
+    }
+
+	table-row, a.table-row {
+		flex-direction: column;
+		padding-top: 1rem;
+		padding-right: 1rem;
+		padding-bottom: 1rem;
+		padding-left: 1rem;
+		align-items: unset;
+		gap: 0.5rem;
+	}
+
+	table-box.mod_strictRow table-row, table-box.mod_strictRow a.table-row {
+		align-items: center;
+	}
+
+	table-row .info, a.table-row .info {
+		width: unset;
+	}
+
+	table-box.mod_strictRow table-row .info, table-box.mod_strictRow a.table-row .info {
+		width: 0;
+	}
+
+	table-row .image img, a.table-row .image img {
+		transform-origin: center;
+	}
+
+	table-row .big, a.table-row .big {
+		text-align: center;
+	}
+
+}
+
+
+
+
+@media only screen and (max-device-width: 490px) {
+
+	table-row .image, a.table-row .image {
+		width: 3rem;
+		height: 3rem;
+	}
+
+	table-row .image img, a.table-row .image img {
+		width: 3rem;
+		height: 3rem;
+	}
+
+	table-box.mod_diacritical table-row .info p, table-box.mod_diacritical a.table-row .info p {
+        font-size: 0.85rem;
+    }
+
+	table-box.mod_diacritical table-row .big samp, table-box.mod_diacritical a.table-row .big samp {
+        font-size: 0.85rem;
+        text-align: right;
+    }
+
+}
+
+
+
+
+@media only screen and (max-device-width: 430px) {
+
+    table-box.mod_diacritical table-row .info, table-box.mod_diacritical a.table-row .info {
+        justify-content: center;
+    }
+
+    table-box.mod_diacritical table-row .big samp, table-box.mod_diacritical a.table-row .big samp {
+        font-size: 0.95rem;
+        font-weight: 400;
+    }
+
+}
+
+
+
+
+@media only screen and (max-device-width: 380px) {
+
+    table-row .image, a.table-row .image {
+        display: none;
+    }
+
+}
