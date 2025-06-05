@@ -1,21 +1,27 @@
-/**
- * 
- * @employSchema
- * @eventListeners
- * @sensibleDefaults
- * @svgSrc
- * @documentation
- * @documentationApi
- * @iconUniformNames
- * @minimizeProperties
- * @objectifyEventListeners
- * @parentElementSelector
- * @distinctEventListeners
- * @propertiesElemUnderscore
- * @propertify
- * @methodNamingConventions
- * @propertyNamingConventions
- */
+var DragContext = {
+    'draggedInstance': null
+};
+
+function debounce ( func, wait ) {
+    
+    var timeout;
+
+    return function debouncedFunction () {
+        
+        var context = this;
+        var args = arguments;
+
+        clearTimeout( timeout );
+
+        timeout = setTimeout( function () {
+
+            func.apply( context, args );
+
+        }, wait );
+
+    };
+
+}
 
 
 
@@ -163,6 +169,8 @@ function RowTable( schema ) {
 
 
 
+    this._debouncedDragEnterHandler = debounce( this._evt_dragenter_container.bind( this ), 30 );
+
     var fragment = document.createDocumentFragment();
     var parentElem;
 
@@ -206,7 +214,7 @@ function RowTable( schema ) {
             this.containerElem.appendChild( dragElem );
 
             this.containerElem.addEventListener( 'dragstart', this._evt_dragstart_container.bind( this ) );
-            this.containerElem.addEventListener( 'dragenter', this._evt_dragenter_container.bind( this ) );
+            this.containerElem.addEventListener( 'dragenter', this._debouncedDragEnterHandler );
             this.containerElem.addEventListener( 'dragleave', this._evt_dragleave_container.bind( this ) );
             this.containerElem.addEventListener( 'dragover', this._evt_dragover_container.bind( this ) );
             this.containerElem.addEventListener( 'dragend', this._evt_dragend_container.bind( this ) );
@@ -578,13 +586,7 @@ function RowTable( schema ) {
  */
 RowTable.prototype._evt_dragstart_container = function( evt ) {
 
-    evt.dataTransfer.setData( 'text', JSON.stringify( this._schema.dataAttrs ) );
-    
-    for ( var attr in this._schema.dataAttrs ) {
-
-        this.containerElem.removeAttribute( 'data-' + attr, this._schema.dataAttrs[ attr ] );
-
-    }
+    DragContext.draggedInstance = this;
 
 };
 
@@ -643,17 +645,20 @@ RowTable.prototype._evt_dragend_container = function( evt ) {
 
     evt.preventDefault();
 
-    var dataAttrs = JSON.parse( evt.dataTransfer.getData( 'text' ) );
+    DragContext.draggedInstance = null;
 
-    for ( var attr in dataAttrs ) {
+    var placeholder = this.containerElem.parentElement.querySelector( '.dragPlaceHolder' );
 
-        this.containerElem.parentElement.querySelector( '.dragPlaceHolder' ).setAttribute( 'data-' + attr, dataAttrs[ attr ] );
+    if ( placeholder ) {
 
-    }
+        placeholder.parentElement.insertBefore( this.containerElem, placeholder );
+        placeholder.remove();
 
-    if ( this._callbackOnRearrange !== null ) {
+        if ( typeof this._callbackOnRearrange === 'function' ) {
 
-        this._callbackOnRearrange();
+            this._callbackOnRearrange( this.containerElem );
+
+        }
 
     }
 

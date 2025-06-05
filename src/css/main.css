@@ -392,7 +392,10 @@ table-row .controls a, table-row .controls samp, table-row .controlsPlain a, tab
 	transition-duration: var(--theme-transitionDuration, 0.15s);
 }
 
-table-row .controls samp.icon, table-row .controlsPlain samp.icon, a.table-row .controls samp.icon, a.table-row .controlsPlain samp.icon {
+table-row .controls samp.icon,
+table-row .controlsPlain samp.icon,
+a.table-row .controls samp.icon,
+a.table-row .controlsPlain samp.icon {
 	display: flex;
 	padding-top: 0.5rem;
 	padding-right: 0.5rem;
@@ -405,6 +408,7 @@ table-row .controls samp.icon, table-row .controlsPlain samp.icon, a.table-row .
 	border-bottom-left-radius: 0.5rem;
 	cursor: pointer;
 	justify-content: center;
+	align-items: center;
 }
 
 table-row .controls samp.icon, a.table-row .controls samp.icon {
