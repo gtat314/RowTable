@@ -128,6 +128,7 @@ function debounce ( func, wait ) {
  * @param {Boolean}                                                                     [schema.disabled]
  * @param {Object}                                                                      [schema.dataAttrs]
  * @param {Object}                                                                      [schema.draggable]
+ * @param {SVGElement}                                                                  [schema.icon]
  * @param {Boolean}                                                                     [schema.draggable.state]
  * @param {Function}                                                                    [schema.draggable.onRearrange]
  * @param {Function}                                                                    [schema.onClick]
@@ -165,6 +166,14 @@ function RowTable( schema ) {
      * @private
      */
     this._callbackOnRearrange = null;
+
+    /**
+     * 
+     * @property
+     * @private
+     * @type {SVGElement}
+     */
+    this._draggableIcon = "<svg xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' stroke-linejoin='round' stroke-miterlimit='2' clip-rule='evenodd' viewBox='0 0 24 24'><path fill-rule='nonzero' d='M14.75 3a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75zm-4 0a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75z'/></svg>";
 
 
 
@@ -206,11 +215,17 @@ function RowTable( schema ) {
 
         if ( this._schema.draggable.state === true ) {
 
+            if ( this._schema.draggable.hasOwnProperty( 'icon' ) ) {
+
+                this._draggableIcon = this._schema.draggable.icon;
+
+            }
+
             this.containerElem.setAttribute( 'draggable', 'true' );
 
             var dragElem = document.createElement( 'SPAN' );
             dragElem.classList.add( 'drag' );
-            dragElem.innerHTML = "<svg xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' stroke-linejoin='round' stroke-miterlimit='2' clip-rule='evenodd' viewBox='0 0 24 24'><path fill-rule='nonzero' d='M14.75 3a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75zm-4 0a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75z'/></svg>";
+            dragElem.innerHTML = this._draggableIcon;
             this.containerElem.appendChild( dragElem );
 
             this.containerElem.addEventListener( 'dragstart', this._evt_dragstart_container.bind( this ) );
