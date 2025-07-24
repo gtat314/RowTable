@@ -2,6 +2,10 @@ var DragContext = {
     'draggedInstance': null
 };
 
+var RowTableIcons = {
+    'draggable': "<svg xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' stroke-linejoin='round' stroke-miterlimit='2' clip-rule='evenodd' viewBox='0 0 24 24'><path fill-rule='nonzero' d='M14.75 3a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75zm-4 0a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75z'/></svg>"
+};
+
 function debounce ( func, wait ) {
     
     var timeout;
@@ -173,7 +177,7 @@ function RowTable( schema ) {
      * @private
      * @type {SVGElement}
      */
-    this._draggableIcon = "<svg xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' stroke-linejoin='round' stroke-miterlimit='2' clip-rule='evenodd' viewBox='0 0 24 24'><path fill-rule='nonzero' d='M14.75 3a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75zm-4 0a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75z'/></svg>";
+    this._draggableIcon = RowTableIcons[ 'draggable' ];
 
 
 
