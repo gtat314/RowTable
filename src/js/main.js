@@ -179,6 +179,34 @@ function RowTable( schema ) {
      */
     this._draggableIcon = RowTableIcons[ 'draggable' ];
 
+    /**
+     * @property
+     * @private
+     * @type {CallableFunction}
+     */
+    this._handleDragstartContainer = this._evt_dragstart_container.bind( this );
+
+    /**
+     * @property
+     * @private
+     * @type {CallableFunction}
+     */
+    this._handleDragleaveContainer = this._evt_dragleave_container.bind( this );
+
+    /**
+     * @property
+     * @private
+     * @type {CallableFunction}
+     */
+    this._handleDragoverContainer = this._evt_dragover_container.bind( this );
+
+    /**
+     * @property
+     * @private
+     * @type {CallableFunction}
+     */
+    this._handleDragendContainer = this._evt_dragend_container.bind( this );
+
 
 
 
@@ -232,11 +260,11 @@ function RowTable( schema ) {
             dragElem.innerHTML = this._draggableIcon;
             this.containerElem.appendChild( dragElem );
 
-            this.containerElem.addEventListener( 'dragstart', this._evt_dragstart_container.bind( this ) );
+            this.containerElem.addEventListener( 'dragstart', this._handleDragstartContainer );
             this.containerElem.addEventListener( 'dragenter', this._debouncedDragEnterHandler );
-            this.containerElem.addEventListener( 'dragleave', this._evt_dragleave_container.bind( this ) );
-            this.containerElem.addEventListener( 'dragover', this._evt_dragover_container.bind( this ) );
-            this.containerElem.addEventListener( 'dragend', this._evt_dragend_container.bind( this ) );
+            this.containerElem.addEventListener( 'dragleave', this._handleDragleaveContainer );
+            this.containerElem.addEventListener( 'dragover', this._handleDragoverContainer );
+            this.containerElem.addEventListener( 'dragend', this._handleDragendContainer );
 
             if ( this._schema.draggable.hasOwnProperty( 'onRearrange' ) ) {
 
