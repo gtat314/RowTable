@@ -333,6 +333,11 @@ table-row .info p, a.table-row .info p {
 	white-space: nowrap;
 }
 
+table-row .info.small p, a.table-row .info.small p {
+	font-size: 0.84rem;
+	opacity: 0.88;
+}
+
 table-row .info.wrap p, a.table-row .info.wrap p {
 	overflow: unset;
 	white-space: normal;
@@ -343,7 +348,8 @@ table-row .info span, a.table-row .info span {
 	font-size: 0.84rem;
 	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
 	opacity: 0.66;
-	transition: color 0.15s ease 0s;
+	transition-property: color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
 }
 
 table-row .info.bold span, a.table-row .info.bold span {
