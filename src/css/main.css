@@ -333,6 +333,10 @@ table-row .info p, a.table-row .info p {
 	white-space: nowrap;
 }
 
+table-row .info.boldTitle p {
+	font-weight: 500;
+}
+
 table-row .info.small p, a.table-row .info.small p {
 	font-size: 0.84rem;
 	opacity: 0.88;
@@ -350,6 +354,14 @@ table-row .info span, a.table-row .info span {
 	opacity: 0.66;
 	transition-property: color;
 	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .info.alignRight span {
+	justify-content: flex-end;
+}
+
+table-row .info.thinSubtitle span {
+	font-weight: 300;
 }
 
 table-row .info.bold span, a.table-row .info.bold span {
