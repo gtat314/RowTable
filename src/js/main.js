@@ -36,12 +36,6 @@ function debounce ( func, wait ) {
  *      classes: array [optional],
  *      disabled: bool [optional],
  *      onClick: Callback [optional],
- *      eventListeners: Array [optiona] [
- *          {
- *              type: EventType,
- *              listener: Callback
- *          }
- *      ],
  *      dataAttrs: object [optional] {
  *          attributeName: attributeValue
  *      },
@@ -89,13 +83,7 @@ function debounce ( func, wait ) {
  *                  dataAttrs: object [optional] {
  *                      attributeName: attributeValue
  *                  },
- *                  onClick: Callback [optional],
- *                  eventListeners: Array [optiona] [
- *                      {
- *                          type: EventType,
- *                          listener: Callback
- *                      }
- *                  ]
+ *                  onClick: Callback [optional]
  *              }
  *          }
  *      ]
@@ -124,9 +112,6 @@ function debounce ( func, wait ) {
  * @param {SVGElement}                                                                  [schema.elements[].buttons[].icon]
  * @param {String}                                                                      [schema.elements[].buttons[].prompt]
  * @param {Object}                                                                      [schema.elements[].buttons[].dataAttrs]
- * @param {Object[]}                                                                    [schema.elements[].buttons[].eventListeners]
- * @param {String}                                                                      [schema.elements[].buttons[].eventListeners[].type]
- * @param {Function}                                                                    [schema.elements[].buttons[].eventListeners[].listener]
  * @param {Function}                                                                    [schema.elements[].buttons[].onClick]
  * @param {Array}                                                                       [schema.classes]
  * @param {Boolean}                                                                     [schema.disabled]
@@ -136,9 +121,6 @@ function debounce ( func, wait ) {
  * @param {Boolean}                                                                     [schema.draggable.state]
  * @param {Function}                                                                    [schema.draggable.onRearrange]
  * @param {Function}                                                                    [schema.onClick]
- * @param {Object[]}                                                                    [schema.eventListeners]
- * @param {String}                                                                       schema.eventListeners[].type
- * @param {Function}                                                                     schema.eventListeners[].listener
  * 
  * @member {HTMLElement}                                                                 containerElem
  * @member {HTMLElement|null}                                                            placeholderContainer
@@ -212,7 +194,6 @@ function RowTable( schema ) {
 
     this._debouncedDragEnterHandler = debounce( this._evt_dragenter_container.bind( this ), 30 );
 
-    var fragment = document.createDocumentFragment();
     var parentElem;
 
     if ( typeof this._schema.parent === 'object' ) {
@@ -255,7 +236,7 @@ function RowTable( schema ) {
 
             this.containerElem.setAttribute( 'draggable', 'true' );
 
-            var dragElem = document.createElement( 'SPAN' );
+            const dragElem = document.createElement( 'SPAN' );
             dragElem.classList.add( 'drag' );
             dragElem.innerHTML = this._draggableIcon;
             this.containerElem.appendChild( dragElem );
@@ -278,7 +259,7 @@ function RowTable( schema ) {
 
     if ( this._schema.hasOwnProperty( 'dataAttrs' ) ) {
 
-        for ( var attr in this._schema.dataAttrs ) {
+        for ( const attr in this._schema.dataAttrs ) {
 
             this.containerElem.setAttribute( 'data-' + attr, this._schema.dataAttrs[ attr ] );
 
@@ -296,31 +277,29 @@ function RowTable( schema ) {
 
     }
 
-    fragment.appendChild( this.containerElem );
+    for ( const elem of this._schema.elements ) {
 
-    for ( var i = 0 ; i < this._schema.elements.length ; i++ ) {
-
-        if ( this._schema.elements[ i ] === null ) {
+        if ( elem === null ) {
 
             continue;
 
         }
 
-        if ( this._schema.elements[ i ].type === 'info' ) {
+        if ( elem.type === 'info' ) {
 
-            var infoElem = document.createElement( 'DIV' );
+            const infoElem = document.createElement( 'DIV' );
             infoElem.classList.add( 'info' );
             this.containerElem.appendChild( infoElem );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'hover' ) ) {
+            if ( elem.hasOwnProperty( 'hover' ) ) {
 
-                infoElem.setAttribute( 'title', this._schema.elements[ i ].hover );
+                infoElem.setAttribute( 'title', elem.hover );
 
             }
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     infoElem.classList.add( value );
     
@@ -328,42 +307,42 @@ function RowTable( schema ) {
 
             }
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'title' ) === true ) {
+            if ( elem.hasOwnProperty( 'title' ) === true ) {
 
-                var infoPElem = document.createElement( 'P' );
-                infoPElem.innerHTML = this._schema.elements[ i ].title;
+                const infoPElem = document.createElement( 'P' );
+                infoPElem.innerHTML = elem.title;
                 infoElem.appendChild( infoPElem );
 
             }
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'subtitle' ) === true ) {
+            if ( elem.hasOwnProperty( 'subtitle' ) === true ) {
 
-                var infoSpanElem = document.createElement( 'SPAN' );
-                infoSpanElem.innerHTML = this._schema.elements[ i ].subtitle;
+                const infoSpanElem = document.createElement( 'SPAN' );
+                infoSpanElem.innerHTML = elem.subtitle;
                 infoElem.appendChild( infoSpanElem );
 
             }
 
-        } else if ( this._schema.elements[ i ].type === 'icon' ) {
+        } else if ( elem.type === 'icon' ) {
 
-            var controlsElem = document.createElement( 'DIV' );
+            const controlsElem = document.createElement( 'DIV' );
             controlsElem.classList.add( 'controlsPlain' );
             this.containerElem.appendChild( controlsElem );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'hover' ) ) {
+            if ( elem.hasOwnProperty( 'hover' ) ) {
 
-                controlsElem.setAttribute( 'title', this._schema.elements[ i ].hover );
+                controlsElem.setAttribute( 'title', elem.hover );
 
             }
 
-            var controlsSampElem = document.createElement( 'SAMP' );
+            const controlsSampElem = document.createElement( 'SAMP' );
             controlsSampElem.classList.add( 'icon' );
-            controlsSampElem.innerHTML = this._schema.elements[ i ].icon;
+            controlsSampElem.innerHTML = elem.icon;
             controlsElem.appendChild( controlsSampElem );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     controlsElem.classList.add( value );
     
@@ -371,21 +350,21 @@ function RowTable( schema ) {
 
             }
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'size' ) ) {
+            if ( elem.hasOwnProperty( 'size' ) ) {
 
-                controlsSampElem.classList.add( this._schema.elements[ i ].size );
+                controlsSampElem.classList.add( elem.size );
 
             }
 
-        } else if ( this._schema.elements[ i ].type === 'icons' ) {
+        } else if ( elem.type === 'icons' ) {
 
-            var iconsElem = document.createElement( 'DIV' );
+            const iconsElem = document.createElement( 'DIV' );
             iconsElem.classList.add( 'icons' );
             this.containerElem.appendChild( iconsElem );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     iconsElem.classList.add( value );
     
@@ -393,15 +372,15 @@ function RowTable( schema ) {
 
             }
 
-            for ( var a = 0 ; a < this._schema.elements[ i ].buttons.length ; a++ ) {
+            for ( const button of elem.buttons ) {
 
-                var iconElem = document.createElement( 'SAMP' );
-                iconElem.innerHTML = this._schema.elements[ i ].buttons[ a ].icon;
+                const iconElem = document.createElement( 'SAMP' );
+                iconElem.innerHTML = button.icon;
                 iconElem.classList.add( 'icon' );
 
-                if ( this._schema.elements[ i ].buttons[ a ].hasOwnProperty( 'classes' ) ) {
+                if ( button.hasOwnProperty( 'classes' ) ) {
 
-                    this._schema.elements[ i ].buttons[ a ].classes.forEach( function( value ){
+                    button.classes.forEach( function( value ){
 
                         iconElem.classList.add( value );
         
@@ -409,9 +388,9 @@ function RowTable( schema ) {
 
                 }
 
-                if ( this._schema.elements[ i ].buttons[ a ].hasOwnProperty( 'title' ) ) {
+                if ( button.hasOwnProperty( 'title' ) ) {
 
-                    iconElem.setAttribute( 'title', this._schema.elements[ i ].buttons[ a ].title );
+                    iconElem.setAttribute( 'title', button.title );
 
                 }
 
@@ -419,15 +398,15 @@ function RowTable( schema ) {
 
             }
 
-        } else if ( this._schema.elements[ i ].type === 'big' ) {
+        } else if ( elem.type === 'big' ) {
 
-            var bigElemWrap = document.createElement( 'DIV' );
+            const bigElemWrap = document.createElement( 'DIV' );
             bigElemWrap.classList.add( 'big' );
             this.containerElem.appendChild( bigElemWrap );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     bigElemWrap.classList.add( value );
     
@@ -435,23 +414,23 @@ function RowTable( schema ) {
 
             }
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'title' ) === true ) {
+            if ( elem.hasOwnProperty( 'title' ) === true ) {
 
                 var bigElem = document.createElement( 'SAMP' );
-                bigElem.innerHTML = this._schema.elements[ i ].title;
+                bigElem.innerHTML = elem.title;
                 bigElemWrap.appendChild( bigElem );
 
             }
 
-        } else if ( this._schema.elements[ i ].type === 'image' ) {
+        } else if ( elem.type === 'image' ) {
 
-            var imageHolderElem = document.createElement( 'DIV' );
+            const imageHolderElem = document.createElement( 'DIV' );
             imageHolderElem.classList.add( 'image' );
             this.containerElem.appendChild( imageHolderElem );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     imageHolderElem.classList.add( value );
     
@@ -459,25 +438,25 @@ function RowTable( schema ) {
 
             }
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'src' ) ) {
+            if ( elem.hasOwnProperty( 'src' ) ) {
 
-                if ( this._schema.elements[ i ].src !== null ) {
+                if ( elem.src !== null ) {
 
-                    var imgElem = document.createElement( 'IMG' );
-                    imgElem.src = this._schema.elements[ i ].src;
+                    const imgElem = document.createElement( 'IMG' );
+                    imgElem.src = elem.src;
                     imageHolderElem.appendChild( imgElem );
 
-                    if ( this._schema.elements[ i ].hasOwnProperty( 'loading' ) ) {
+                    if ( elem.hasOwnProperty( 'loading' ) ) {
 
-                        imgElem.setAttribute( 'loading', this._schema.elements[ i ].loading );
+                        imgElem.setAttribute( 'loading', elem.loading );
 
                     }
 
                 } else {
 
-                    if ( this._schema.elements[ i ].hasOwnProperty( 'backgroundImage' ) ) {
+                    if ( elem.hasOwnProperty( 'backgroundImage' ) ) {
 
-                        imageHolderElem.innerHTML = this._schema.elements[ i ].backgroundImage;
+                        imageHolderElem.innerHTML = elem.backgroundImage;
 
                     }
 
@@ -485,15 +464,15 @@ function RowTable( schema ) {
 
             }
 
-        } else if ( this._schema.elements[ i ].type === 'controls' ) {
+        } else if ( elem.type === 'controls' ) {
 
-            var controlsElem = document.createElement( 'DIV' );
+            const controlsElem = document.createElement( 'DIV' );
             controlsElem.classList.add( 'controls' );
             this.containerElem.appendChild( controlsElem );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     controlsElem.classList.add( value );
     
@@ -501,15 +480,15 @@ function RowTable( schema ) {
 
             }
 
-            for ( var p = 0 ; p < this._schema.elements[ i ].buttons.length ; p++ ) {
+            for ( const button of elem.buttons ) {
 
-                var controlsButtonElem = document.createElement( 'SAMP' );
+                const controlsButtonElem = document.createElement( 'SAMP' );
                 controlsButtonElem.classList.add( 'icon' );
-                controlsButtonElem.innerHTML = this._schema.elements[ i ].buttons[ p ].icon;
+                controlsButtonElem.innerHTML = button.icon;
 
-                if ( this._schema.elements[ i ].buttons[ p ].hasOwnProperty( 'classes' ) ) {
+                if ( button.hasOwnProperty( 'classes' ) ) {
 
-                    this._schema.elements[ i ].buttons[ p ].classes.forEach( function( value ){
+                    button.classes.forEach( function( value ){
 
                         controlsButtonElem.classList.add( value );
         
@@ -517,46 +496,33 @@ function RowTable( schema ) {
 
                 }
 
-                if ( this._schema.elements[ i ].buttons[ p ].hasOwnProperty( 'title' ) ) {
+                if ( button.hasOwnProperty( 'title' ) ) {
 
-                    var controlsButtonTitleElem = document.createElement( 'SPAN' );
-                    controlsButtonTitleElem.innerHTML = this._schema.elements[ i ].buttons[ p ].title;
+                    const controlsButtonTitleElem = document.createElement( 'SPAN' );
+                    controlsButtonTitleElem.innerHTML = button.title;
                     controlsButtonElem.appendChild( controlsButtonTitleElem );
 
                 }
 
-                if ( this._schema.elements[ i ].buttons[ p ].hasOwnProperty( 'prompt' ) ) {
+                if ( button.hasOwnProperty( 'prompt' ) ) {
 
-                    controlsButtonElem.setAttribute( 'title', this._schema.elements[ i ].buttons[ p ].prompt );
+                    controlsButtonElem.setAttribute( 'title', button.prompt );
 
                 }
 
-                if ( this._schema.elements[ i ].buttons[ p ].hasOwnProperty( 'dataAttrs' ) ) {
+                if ( button.hasOwnProperty( 'dataAttrs' ) ) {
 
-                    for ( var attr in this._schema.elements[ i ].buttons[ p ].dataAttrs ) {
+                    for ( const attr in button.dataAttrs ) {
         
-                        controlsButtonElem.setAttribute( 'data-' + attr, this._schema.elements[ i ].buttons[ p ].dataAttrs[ attr ] );
+                        controlsButtonElem.setAttribute( 'data-' + attr, button.dataAttrs[ attr ] );
         
                     }
         
                 }
 
-                if ( this._schema.elements[ i ].buttons[ p ].hasOwnProperty( 'eventListeners' ) === true ) {
+                if ( button.hasOwnProperty( 'onClick' ) === true ) {
 
-                    for ( var s = 0 ; s < this._schema.elements[ i ].buttons[ p ].eventListeners.length ; s++ ) {
-
-                        controlsButtonElem.addEventListener(
-                            this._schema.elements[ i ].buttons[ p ].eventListeners[ s ].type,
-                            this._schema.elements[ i ].buttons[ p ].eventListeners[ s ].listener
-                        );
-        
-                    }
-        
-                }
-
-                if ( this._schema.elements[ i ].buttons[ p ].hasOwnProperty( 'onClick' ) === true ) {
-
-                    controlsButtonElem.addEventListener( 'click', this._schema.elements[ i ].buttons[ p ].onClick );
+                    controlsButtonElem.addEventListener( 'click', button.onClick );
 
                 }
 
@@ -564,15 +530,15 @@ function RowTable( schema ) {
 
             }
 
-        } else if ( this._schema.elements[ i ].type === 'linebreaker' ) {
+        } else if ( elem.type === 'linebreaker' ) {
 
-            var linebreakerElem = document.createElement( 'DIV' );
+            const linebreakerElem = document.createElement( 'DIV' );
             linebreakerElem.classList.add( 'linebreaker' );
             this.containerElem.appendChild( linebreakerElem );
 
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     linebreakerElem.classList.add( value );
     
@@ -580,13 +546,13 @@ function RowTable( schema ) {
 
             }
 
-        } else if ( this._schema.elements[ i ].type === 'placeholder' ) {
+        } else if ( elem.type === 'placeholder' ) {
 
             this.placeholderContainer = document.createElement( 'DIV' );
             
-            if ( this._schema.elements[ i ].hasOwnProperty( 'classes' ) ) {
+            if ( elem.hasOwnProperty( 'classes' ) ) {
 
-                this._schema.elements[ i ].classes.forEach( function( value ){
+                elem.classes.forEach( function( value ){
 
                     this.placeholderContainer.classList.add( value );
     
@@ -600,26 +566,72 @@ function RowTable( schema ) {
 
     }
 
-    if ( this._schema.hasOwnProperty( 'eventListeners' ) === true ) {
-
-        for ( var a = 0 ; a < this._schema.eventListeners.length ; a++ ) {
-
-            this.containerElem.addEventListener(
-                this._schema.eventListeners[ a ].type,
-                this._schema.eventListeners[ a ].listener
-            );
-
-        }
-
-    }
-
     if ( this._schema.hasOwnProperty( 'onClick' ) === true ) {
 
         this.containerElem.addEventListener( 'click', this._schema.onClick );
 
     }
 
-    parentElem.appendChild( fragment );
+    parentElem.appendChild( this.containerElem );
+
+};
+
+
+
+
+/**
+ * 
+ * @returns {void}
+ */
+RowTable.prototype.destroy = function() {
+    
+    // 1. Guard clause: Check if already destroyed to prevent errors
+    if ( !this.containerElem ) {
+
+        return;
+
+    }
+
+    // 2. Unbind Drag & Drop Listeners
+    // We only need to unbind these if they were actually attached
+    if ( this._schema && this._schema.draggable && this._schema.draggable.state === true ) {
+        
+        this.containerElem.removeEventListener( 'dragstart', this._handleDragstartContainer );
+        this.containerElem.removeEventListener( 'dragenter', this._debouncedDragEnterHandler );
+        this.containerElem.removeEventListener( 'dragleave', this._handleDragleaveContainer );
+        this.containerElem.removeEventListener( 'dragover', this._handleDragoverContainer );
+        this.containerElem.removeEventListener( 'dragend', this._handleDragendContainer );
+        
+    }
+
+    // 3. Unbind the primary click listener
+    if ( this._schema && typeof this._schema.onClick === 'function' ) {
+
+        this.containerElem.removeEventListener( 'click', this._schema.onClick );
+
+    }
+
+    // 4. Remove the element from the DOM
+    if ( this.containerElem.parentElement ) {
+
+        this.containerElem.parentElement.removeChild( this.containerElem );
+        
+    }
+
+    // 5. Nullify DOM references so the Garbage Collector can delete them
+    this.containerElem = null;
+    this.placeholderContainer = null;
+
+    // 6. Nullify data and callback references
+    this._schema = null;
+    this._callbackOnRearrange = null;
+    
+    // 7. Nullify the bound function properties
+    this._handleDragstartContainer = null;
+    this._handleDragleaveContainer = null;
+    this._handleDragoverContainer = null;
+    this._handleDragendContainer = null;
+    this._debouncedDragEnterHandler = null;
 
 };
 
