@@ -4,6 +4,7 @@
 		@cssMod: mod_discreet
 		@cssMod: mod_strictRow
 		@cssMod: mod_compact
+		@cssMod: mod_noOverflow
 	@customTag: table-row
 	--theme-discreetBoxShadow 			rgba(0, 0, 0, 0.2)
 	--theme-highlightedBackgroundColor 	rgba(0, 0, 0, 0.1)
@@ -35,6 +36,10 @@ table-box.mod_diacritical {
 	box-shadow: 0 0 0 black;
 	overflow: unset;
 	background-color: var(--theme-inputBackgroundColor, rgba(0, 0, 0, 0)) !important;
+}
+
+table-box.mod_noOverflow {
+	overflow: unset;
 }
 
 table-box.mod_discreet {
@@ -305,6 +310,119 @@ table-row .big samp, a.table-row .big samp {
 	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
 	transition-property: color;
 	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .more {
+	position: relative;
+	width: 2rem;
+	height: 2rem;
+}
+
+table-row .more .button {
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	justify-content: center;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+	border-bottom-left-radius: 0.25rem;
+	transition-property: border-color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgba(255, 255, 255, 0);
+}
+
+table-row .more:hover .button {
+	border-color: var(--theme-secondaryFont, rgba(0, 0, 0, 0.6));
+}
+
+table-row .more.active .button {
+	background-color: var(--theme-background);
+	border-color: var(--theme-secondaryFont);
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-left-color: var(--theme-background);
+	z-index: 3;
+	position: absolute;
+}
+
+table-row .more .button svg {
+	width: 75%;
+	fill: var(--theme-mainFont, rgba(0, 0, 0, 1));
+}
+
+table-row .more .menu {
+	position: absolute;
+	top: 0;
+	right: calc( 100% - 1px );
+	z-index: 2;
+	background-color: var(--theme-background, rgba(255, 255, 255, 1));
+	padding: 1rem;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+	width: 95vw;
+	max-width: 25rem;
+	border-style: solid;
+	border-width: 1px;
+	border-color: var(--theme-secondaryFont);
+	display: none;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+table-row .more.active .menu {
+	display: flex;
+}
+
+table-row .more .menu hr {
+	border-bottom-width: 1px;
+	border-bottom-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+	width: 95%;
+	border-bottom-style: solid;
+	margin: 0.25rem auto;
+}
+
+table-row .more .menu hr:last-child {
+	display: none;
+}
+
+table-row .more .menu p {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition-property: background-color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	gap: 0.25rem;
+}
+
+table-row .more .menu p:hover {
+	background-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
+}
+
+table-row .more .menu p span {
+	font-weight: 600;
+	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
+	transition-property: color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+	font-size: 0.95rem;
+}
+
+table-row .more .menu p samp {
+	font-size: 0.8rem;
+	line-height: 1rem;
+	color: var(--theme-secondaryFont, rgba(0, 0, 0, 0.6));
+	transition-property: color;
+	transition-duration: var(--theme-transitionDuration, 0.15s);
+}
+
+table-row .more .menu p:hover samp {
+	color: var(--theme-mainFont, rgba(0, 0, 0, 1));
 }
 
 table-row .info, a.table-row .info {

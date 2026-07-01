@@ -3,7 +3,8 @@ var DragContext = {
 };
 
 var RowTableIcons = {
-    'draggable': "<svg xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' stroke-linejoin='round' stroke-miterlimit='2' clip-rule='evenodd' viewBox='0 0 24 24'><path fill-rule='nonzero' d='M14.75 3a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75zm-4 0a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75z'/></svg>"
+    'draggable': "<svg xmlns='http://www.w3.org/2000/svg' fill-rule='evenodd' stroke-linejoin='round' stroke-miterlimit='2' clip-rule='evenodd' viewBox='0 0 24 24'><path fill-rule='nonzero' d='M14.75 3a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75zm-4 0a.75.75 0 0 0-.75.75v16.5a.75.75 0 0 0 1.5 0V3.75a.75.75 0 0 0-.75-.75z'/></svg>",
+    'more': "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'><path d='M480-160q-33 0-56.5-23.5T400-240t23.5-56.5T480-320t56.5 23.5T560-240t-23.5 56.5T480-160m0-240q-33 0-56.5-23.5T400-480t23.5-56.5T480-560t56.5 23.5T560-480t-23.5 56.5T480-400m0-240q-33 0-56.5-23.5T400-720t23.5-56.5T480-800t56.5 23.5T560-720t-23.5 56.5T480-640'/></svg>"
 };
 
 function debounce ( func, wait ) {
@@ -99,28 +100,30 @@ function debounce ( func, wait ) {
  * @param {HTMLElement|CSSRule}                                                          schema.parent
  * @param {String}                                                                       schema.title
  * @param {Object[]}                                                                     schema.elements
- * @param {'info'|'icon'|'big'|'image'|'linebreaker'|'placeholder'|'controls'|'icons'}   schema.elements[].type
+ * @param {'info'|'icon'|'big'|'image'|'linebreaker'|'placeholder'|'controls'|'icons'|'more'} schema.elements[].type
  * @param {Array}                                                                       [schema.elements[].classes]
- * @param {HTMLSourceElement}                                                           [schema.elements[].title]
- * @param {HTMLSourceElement}                                                           [schema.elements[].subtitle]
+ * @param {HTMLElement}                                                                 [schema.elements[].title]
+ * @param {HTMLElement}                                                                 [schema.elements[].subtitle]
+ * @param {SVGElement}                                                                  [schema.elements[].icon]
  * @param {'large'}                                                                     [schema.elements[].size]
  * @param {URL}                                                                         [schema.elements[].src]
  * @param {'eager'|'lazy'}                                                              [schema.elements[].loading]
  * @param {URL}                                                                         [schema.elements[].backgroundImage]
  * @param {Object[]}                                                                    [schema.elements[].buttons]
- * @param {HTMLSourceElement}                                                           [schema.elements[].buttons[].title]
+ * @param {HTMLElement}                                                                 [schema.elements[].buttons[].title]
+ * @param {HTMLElement}                                                                 [schema.elements[].buttons[].subtitle]
  * @param {SVGElement}                                                                  [schema.elements[].buttons[].icon]
  * @param {String}                                                                      [schema.elements[].buttons[].prompt]
  * @param {Object}                                                                      [schema.elements[].buttons[].dataAttrs]
- * @param {Function}                                                                    [schema.elements[].buttons[].onClick]
+ * @param {CallableFunction}                                                            [schema.elements[].buttons[].onClick]
  * @param {Array}                                                                       [schema.classes]
  * @param {Boolean}                                                                     [schema.disabled]
  * @param {Object}                                                                      [schema.dataAttrs]
  * @param {Object}                                                                      [schema.draggable]
  * @param {SVGElement}                                                                  [schema.icon]
  * @param {Boolean}                                                                     [schema.draggable.state]
- * @param {Function}                                                                    [schema.draggable.onRearrange]
- * @param {Function}                                                                    [schema.onClick]
+ * @param {CallableFunction}                                                            [schema.draggable.onRearrange]
+ * @param {CallableFunction}                                                            [schema.onClick]
  * 
  * @member {HTMLElement}                                                                 containerElem
  * @member {HTMLElement|null}                                                            placeholderContainer
@@ -188,6 +191,13 @@ function RowTable( schema ) {
      * @type {CallableFunction}
      */
     this._handleDragendContainer = this._evt_dragend_container.bind( this );
+
+    /**
+     * @property
+     * @private
+     * @type {CallableFunction}
+     */
+    this._handleClickMore = this._evt_click_more.bind( this );
 
 
 
@@ -464,6 +474,70 @@ function RowTable( schema ) {
 
             }
 
+        } else if ( elem.type === 'more' ) {
+
+            const moreElem = document.createElement( 'DIV' );
+            moreElem.classList.add( 'more' );
+            this.containerElem.appendChild( moreElem );
+
+            const moreButtonElem = document.createElement( 'DIV' );
+            moreButtonElem.classList.add( 'button' );
+            moreElem.appendChild( moreButtonElem );
+
+            if ( elem.hasOwnProperty( 'icon' ) ) {
+
+                moreButtonElem.innerHTML = elem.icon;
+
+            } else {
+
+                moreButtonElem.innerHTML = RowTableIcons.more;
+
+            }
+
+            moreButtonElem.addEventListener( 'click', this._handleClickMore );
+
+            const moreMenuElem = document.createElement( 'DIV' );
+            moreMenuElem.classList.add( 'menu' );
+            moreElem.appendChild( moreMenuElem );
+
+            for ( const button of elem.buttons ) {
+
+                const moreButtonElem = document.createElement( 'P' );
+                moreMenuElem.appendChild( moreButtonElem );
+
+                const moreButtonTitleElem = document.createElement( 'SPAN' );
+                moreButtonTitleElem.textContent = button.title;
+                moreButtonElem.appendChild( moreButtonTitleElem );
+
+                if ( button.hasOwnProperty( 'subtitle' ) ) {
+
+                    const moreButtonSubtitleElem = document.createElement( 'SAMP' );
+                    moreButtonSubtitleElem.textContent = button.subtitle;
+                    moreButtonElem.appendChild( moreButtonSubtitleElem );
+
+                }
+
+                if ( button.hasOwnProperty( 'dataAttrs' ) ) {
+
+                    for ( const attr in button.dataAttrs ) {
+        
+                        moreButtonElem.setAttribute( 'data-' + attr, button.dataAttrs[ attr ] );
+        
+                    }
+        
+                }
+
+                if ( button.hasOwnProperty( 'onClick' ) === true ) {
+
+                    moreButtonElem.addEventListener( 'click', button.onClick );
+
+                }
+
+                const hrElem = document.createElement( 'HR' );
+                moreMenuElem.appendChild( hrElem );
+
+            }
+
         } else if ( elem.type === 'controls' ) {
 
             const controlsElem = document.createElement( 'DIV' );
@@ -639,6 +713,33 @@ RowTable.prototype.destroy = function() {
 
 
 /**
+ * @method
+ * @private
+ * @param {Event} evt 
+ */
+RowTable.prototype._evt_click_more = function( evt ) {
+
+    evt.stopPropagation();
+
+    const parent                = evt.currentTarget.parentElement;
+    const isCurrentlyActive     = parent.classList.contains( 'active' );
+    const elems                 = document.querySelectorAll( 'table-row .more' );
+
+    for ( const elem of elems ) {
+
+        elem.classList.remove( 'active' );
+
+    }
+
+    if ( !isCurrentlyActive ) {
+
+        parent.classList.add( 'active' );
+
+    }
+
+};
+
+/**
  * 
  * @private
  * @param {Event} evt 
@@ -722,3 +823,21 @@ RowTable.prototype._evt_dragend_container = function( evt ) {
     }
 
 };
+
+
+
+
+/**
+ * @global
+ */
+document.addEventListener( 'click', function( evt ){
+
+    const elems = document.querySelectorAll( 'table-row .more' );
+
+    for ( const elem of elems ) {
+
+        elem.classList.remove( 'active' );
+
+    }
+
+});
