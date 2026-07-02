@@ -6,6 +6,8 @@
 		@cssMod: mod_compact
 		@cssMod: mod_noOverflow
 	@customTag: table-row
+		@cssMod: mod_mr1
+		@cssMod: mod_ml1
 	--theme-discreetBoxShadow 			rgba(0, 0, 0, 0.2)
 	--theme-highlightedBackgroundColor 	rgba(0, 0, 0, 0.1)
 	--theme-inputBackgroundColor 		rgba(0, 0, 0, 0)
@@ -378,6 +380,13 @@ table-row .more.active .menu {
 	display: flex;
 }
 
+table-row .more.flip-up .menu {
+    top: auto;
+    bottom: 0;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0;
+}
+
 table-row .more .menu hr {
 	border-bottom-width: 1px;
 	border-bottom-color: var(--theme-highlightedBackgroundColor, rgba(0, 0, 0, 0.1));
@@ -439,6 +448,14 @@ table-row .info, a.table-row .info {
 
 table-row .info.reverse, a.table-row .info.reverse {
 	flex-direction: column-reverse;
+}
+
+table-row .info.mod_ml1 {
+	margin-left: 1rem;
+}
+
+table-row .info.mod_mr1 {
+	margin-right: 1rem;
 }
 
 table-row .info p, a.table-row .info p {

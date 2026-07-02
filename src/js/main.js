@@ -502,18 +502,18 @@ function RowTable( schema ) {
 
             for ( const button of elem.buttons ) {
 
-                const moreButtonElem = document.createElement( 'P' );
-                moreMenuElem.appendChild( moreButtonElem );
+                const moreButtonElemP = document.createElement( 'P' );
+                moreMenuElem.appendChild( moreButtonElemP );
 
                 const moreButtonTitleElem = document.createElement( 'SPAN' );
                 moreButtonTitleElem.textContent = button.title;
-                moreButtonElem.appendChild( moreButtonTitleElem );
+                moreButtonElemP.appendChild( moreButtonTitleElem );
 
                 if ( button.hasOwnProperty( 'subtitle' ) ) {
 
                     const moreButtonSubtitleElem = document.createElement( 'SAMP' );
                     moreButtonSubtitleElem.textContent = button.subtitle;
-                    moreButtonElem.appendChild( moreButtonSubtitleElem );
+                    moreButtonElemP.appendChild( moreButtonSubtitleElem );
 
                 }
 
@@ -521,7 +521,7 @@ function RowTable( schema ) {
 
                     for ( const attr in button.dataAttrs ) {
         
-                        moreButtonElem.setAttribute( 'data-' + attr, button.dataAttrs[ attr ] );
+                        moreButtonElemP.setAttribute( 'data-' + attr, button.dataAttrs[ attr ] );
         
                     }
         
@@ -529,7 +529,21 @@ function RowTable( schema ) {
 
                 if ( button.hasOwnProperty( 'onClick' ) === true ) {
 
-                    moreButtonElem.addEventListener( 'click', button.onClick );
+                    moreButtonElemP.addEventListener( 'click', function( evt ) {
+
+                        evt.stopPropagation();
+                        
+                        var menuContainer = evt.currentTarget.closest( '.more' );
+
+                        if ( menuContainer ) {
+
+                            menuContainer.classList.remove( 'active' );
+
+                        }
+
+                        button.onClick.call( this, evt );
+
+                    });
 
                 }
 
@@ -728,12 +742,31 @@ RowTable.prototype._evt_click_more = function( evt ) {
     for ( const elem of elems ) {
 
         elem.classList.remove( 'active' );
+        elem.classList.remove( 'flip-up' );
 
     }
 
     if ( !isCurrentlyActive ) {
 
+        // 2. We must make the menu active FIRST so the browser gives it a physical height
         parent.classList.add( 'active' );
+
+        // 3. Find the specific menu inside this parent that we just revealed
+        const menuElement = parent.querySelector( '.menu' );
+
+        // 4. Measure the space below the button and the actual height of the menu
+        const buttonRect = evt.currentTarget.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - buttonRect.bottom;
+        
+        // offsetHeight gets the exact rendered height in pixels, including padding and borders
+        const menuHeight = menuElement.offsetHeight;
+
+        // 5. If the exact height of the menu is larger than the space left on screen, flip it
+        if ( spaceBelow < menuHeight ) {
+            
+            parent.classList.add( 'flip-up' );
+
+        }
 
     }
 
@@ -827,17 +860,35 @@ RowTable.prototype._evt_dragend_container = function( evt ) {
 
 
 
-/**
- * @global
- */
-document.addEventListener( 'click', function( evt ){
+document.addEventListener( 'click', function( evt ) {
 
-    const elems = document.querySelectorAll( 'table-row .more' );
+    // 1. Find out if any menus are currently open
+    var activeMenus = document.querySelectorAll( 'table-row .more.active' );
+    
+    // If no menus are open, do nothing and let the click happen normally
+    if ( activeMenus.length === 0 ) {
 
-    for ( const elem of elems ) {
-
-        elem.classList.remove( 'active' );
+        return;
 
     }
 
-});
+    // 2. Check if the user clicked INSIDE the active menu itself
+    var clickedInsideMenu = evt.target.closest( 'table-row .more.active' );
+
+    // 3. If they clicked outside the menu...
+    if ( !clickedInsideMenu ) {
+        
+        // Close the menus
+        for ( const activeMenu of activeMenus ) {
+
+            activeMenu.classList.remove( 'active' );
+
+        }
+
+        // STOP the event dead in its tracks. 
+        // It will never reach the element the user actually clicked.
+        evt.stopPropagation();
+        evt.preventDefault();
+    }
+
+}, true );
