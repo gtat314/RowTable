@@ -204,7 +204,7 @@ function RowTable( schema ) {
 
     this._debouncedDragEnterHandler = debounce( this._evt_dragenter_container.bind( this ), 30 );
 
-    var parentElem;
+    let parentElem;
 
     if ( typeof this._schema.parent === 'object' ) {
 
@@ -426,7 +426,7 @@ function RowTable( schema ) {
 
             if ( elem.hasOwnProperty( 'title' ) === true ) {
 
-                var bigElem = document.createElement( 'SAMP' );
+                const bigElem = document.createElement( 'SAMP' );
                 bigElem.innerHTML = elem.title;
                 bigElemWrap.appendChild( bigElem );
 
@@ -533,7 +533,7 @@ function RowTable( schema ) {
 
                         evt.stopPropagation();
                         
-                        var menuContainer = evt.currentTarget.closest( '.more' );
+                        const menuContainer = evt.currentTarget.closest( '.more' );
 
                         if ( menuContainer ) {
 
@@ -798,7 +798,7 @@ RowTable.prototype._evt_dragenter_container = function( evt ) {
 
     }
 
-    var dragPlaceHolder = document.createElement( 'DIV' );
+    const dragPlaceHolder = document.createElement( 'DIV' );
     dragPlaceHolder.classList.add( 'dragPlaceHolder' );
     dragPlaceHolder.style.height = this.containerElem.offsetHeight + 'px';
 
@@ -840,7 +840,7 @@ RowTable.prototype._evt_dragend_container = function( evt ) {
 
     DragContext.draggedInstance = null;
 
-    var placeholder = this.containerElem.parentElement.querySelector( '.dragPlaceHolder' );
+    const placeholder = this.containerElem.parentElement.querySelector( '.dragPlaceHolder' );
 
     if ( placeholder ) {
 
@@ -863,7 +863,7 @@ RowTable.prototype._evt_dragend_container = function( evt ) {
 document.addEventListener( 'click', function( evt ) {
 
     // 1. Find out if any menus are currently open
-    var activeMenus = document.querySelectorAll( 'table-row .more.active' );
+    const activeMenus = document.querySelectorAll( 'table-row .more.active' );
     
     // If no menus are open, do nothing and let the click happen normally
     if ( activeMenus.length === 0 ) {
@@ -873,7 +873,7 @@ document.addEventListener( 'click', function( evt ) {
     }
 
     // 2. Check if the user clicked INSIDE the active menu itself
-    var clickedInsideMenu = evt.target.closest( 'table-row .more.active' );
+    const clickedInsideMenu = evt.target.closest( 'table-row .more.active' );
 
     // 3. If they clicked outside the menu...
     if ( !clickedInsideMenu ) {
