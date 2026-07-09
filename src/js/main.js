@@ -112,6 +112,7 @@ function debounce ( func, wait ) {
  * @param {Object[]}                                                                    [schema.elements[].buttons]
  * @param {HTMLElement}                                                                 [schema.elements[].buttons[].title]
  * @param {HTMLElement}                                                                 [schema.elements[].buttons[].subtitle]
+ * @param {String[]}                                                                    [schema.elements[].buttons[].classes]
  * @param {SVGElement}                                                                  [schema.elements[].buttons[].icon]
  * @param {String}                                                                      [schema.elements[].buttons[].prompt]
  * @param {Object}                                                                      [schema.elements[].buttons[].dataAttrs]
