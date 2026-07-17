@@ -481,6 +481,16 @@ function RowTable( schema ) {
             moreElem.classList.add( 'more' );
             this.containerElem.appendChild( moreElem );
 
+            if ( elem.hasOwnProperty( 'classes' ) ) {
+
+                elem.classes.forEach( function( value ){
+
+                    moreElem.classList.add( value );
+    
+                });
+
+            }
+
             const moreButtonElem = document.createElement( 'DIV' );
             moreButtonElem.classList.add( 'button' );
             moreElem.appendChild( moreButtonElem );

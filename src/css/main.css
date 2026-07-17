@@ -8,6 +8,7 @@
 	@customTag: table-row
 		@cssMod: mod_mr1
 		@cssMod: mod_ml1
+		@cssMod: mod_right
 	--theme-discreetBoxShadow 			rgba(0, 0, 0, 0.2)
 	--theme-highlightedBackgroundColor 	rgba(0, 0, 0, 0.1)
 	--theme-inputBackgroundColor 		rgba(0, 0, 0, 0)
@@ -393,6 +394,15 @@ table-row .more.active .button {
 	position: absolute;
 }
 
+table-row .more.active.mod_right .button {
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0.5rem;
+	border-left-color: unset;
+	border-right-color: var(--theme-background);
+}
+
 table-row .more .button svg {
 	width: 75%;
 	fill: var(--theme-mainFont, rgba(0, 0, 0, 1));
@@ -417,6 +427,13 @@ table-row .more .menu {
 	display: none;
 	flex-direction: column;
 	gap: 0.5rem;
+}
+
+table-row .more.mod_right .menu {
+	right: unset;
+	left: calc(100% - 1px);
+	border-top-left-radius: 0;
+	border-top-right-radius: 0.5rem;
 }
 
 table-row .more.active .menu {
