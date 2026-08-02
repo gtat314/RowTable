@@ -738,7 +738,7 @@ a.table-row:last-child .controlsPlain samp.moveDown {
 
 
 
-@media only screen and (max-device-width: 900px) {
+@media only screen and (max-width: 900px) {
 
     table-box.mod_diacritical table-row .drag,
 	table-box.mod_diacritical a.table-row .drag {
@@ -752,7 +752,7 @@ a.table-row:last-child .controlsPlain samp.moveDown {
 
 
 
-@media only screen and (max-device-width: 550px) {
+@media only screen and (max-width: 550px) {
 
 	table-row .drag,
 	a.table-row .drag {
@@ -827,7 +827,7 @@ a.table-row:last-child .controlsPlain samp.moveDown {
 
 
 
-@media only screen and (max-device-width: 490px) {
+@media only screen and (max-width: 490px) {
 
 	table-row .image,
 	a.table-row .image {
@@ -857,7 +857,7 @@ a.table-row:last-child .controlsPlain samp.moveDown {
 
 
 
-@media only screen and (max-device-width: 430px) {
+@media only screen and (max-width: 430px) {
 
     table-box.mod_diacritical table-row .info,
 	table-box.mod_diacritical a.table-row .info {
@@ -875,7 +875,7 @@ a.table-row:last-child .controlsPlain samp.moveDown {
 
 
 
-@media only screen and (max-device-width: 380px) {
+@media only screen and (max-width: 380px) {
 
     table-row .image,
 	a.table-row .image {
