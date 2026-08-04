@@ -101,6 +101,7 @@ function debounce ( func, wait ) {
  * @param {String}                                                                       schema.title
  * @param {Object[]}                                                                     schema.elements
  * @param {'info'|'icon'|'big'|'image'|'linebreaker'|'placeholder'|'controls'|'icons'|'more'} schema.elements[].type
+ * @param {String}                                                                      [schema.elements[].hover]
  * @param {Array}                                                                       [schema.elements[].classes]
  * @param {HTMLElement}                                                                 [schema.elements[].title]
  * @param {HTMLElement}                                                                 [schema.elements[].subtitle]
