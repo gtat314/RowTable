@@ -58,6 +58,14 @@ table-box.mod_discreet {
 	transition-duration: var(--theme-transitionDuration, 0.15s);
 }
 
+table-box table-row:first-child {
+	border-radius: 0.5rem 0.5rem 0 0;
+}
+
+table-box table-row:last-child {
+	border-radius: 0 0 0.5rem 0.5rem;
+}
+
 table-row,
 a.table-row {
 	display: flex;
