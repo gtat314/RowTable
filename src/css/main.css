@@ -250,6 +250,12 @@ a.table-row > .marginRight2 {
 	margin-right: 2rem;
 }
 
+table-row > .info.maxContent,
+a.table-row > .info.maxContent {
+	flex: unset;
+	width: max-content;
+}
+
 
 
 
